@@ -1,0 +1,225 @@
+
+// Defining what a Node is
+class Node
+{
+	int data;
+	Node next;
+	
+	// Creating a constructor specifying what a node has
+	public Node (int data)
+	{
+		this.data = data;
+	}
+}
+
+// LinkedList class containing functions using Nodes
+class LinkedList 
+{
+	Node head; // Create the head of the list
+	int position;
+	
+	// Append function to add a node to the end of the list
+	public void append (int data)
+	{
+		// If statement to check if there is no head. If not, a head is created.
+		if (head == null) 
+		{
+			head = new Node(data); 
+			return;
+		}
+		
+		else 
+		{
+			Node current = head;  // Start at the head of the list
+			
+			// While loop to go through the list
+			while (current.next != null)
+			{
+				current = current.next; 
+			}
+			
+			current.next = new Node(data);  // Creates a new node with data for the next node 
+		}
+		
+	}
+	
+	// Function to add a node to the start of the list
+	public void prepend (int data)
+	{
+		Node newhead = new Node(data);  // Creates a temporary new head
+		newhead.next = head;  // Places the temporary new head before the head
+		head = newhead;  // Assigns the head of the list to be the new head
+	}
+	
+	// Function to delete a node with a specified position
+	public void deletewithposition (int position)
+	{
+		// If head is null return
+		if (head ==  null)
+		{
+			return;
+		}
+		
+		else 
+		{
+			Node current = head;
+			
+			// If the position given is 0, or the first in the list, delete the head
+			if (position == 0)
+			{
+				head = head.next;
+				return;
+			}
+			
+			// If the position given is greater than 0, then go through the list
+			else 
+			{
+				
+				// For loop to go through the list and stop at the node before the desired node
+				for (int i = 1; i < position; i ++)
+				{
+					current = current.next;
+				}
+				
+				current.next = current.next.next; // Delete the next node which is the node specified
+				return;
+			}
+		}
+	}
+	
+	// Function to delete a node with a specific value
+	public void deletewithvalue (int data)
+	{
+		// Do nothing if the head is null
+		if (head == null)
+		{
+			return;
+		}
+		
+		else
+		{
+			Node current = head;  // Start at the head
+			
+			// While loop to go through the list
+			while (current.next != null)
+			{
+				
+				// Cuts out of the list if the head contains the data specified
+				if (head.data == data)
+				{
+					head = head.next;
+					return;
+				}
+				
+				// Stop at the node before the node containing the specified data
+				if (current.next.data == data)
+				{
+					current.next = current.next.next; // Replace the next node with the next next node
+					return;
+				}
+				
+				current = current.next; // In other cases, move on to the next node
+			}
+		}
+	}
+	
+	public void insertintoposition(int position, int data)
+	{
+		// Do nothing if the head is null
+		if (head == null)
+		{
+			return;
+		}
+		
+		else 
+		{
+			Node current = head;
+			
+			// If the position given is 0, or the first in the list, delete the head
+			if (position == 0)
+			{
+				Node newhead = new Node(data);  // Creates a temporary new head
+				newhead.next = head;  // Places the temporary new head before the head
+				head = newhead;  // Assigns the head of the list to be the new head
+				return;
+			}
+			
+			// If the position given is greater than 0, then go through the list
+			else 
+			{
+				
+				// For loop to go through the list and stop at the node before the desired node
+				for (int i = 1; i < position; i ++)
+				{
+					current = current.next;
+				}
+				
+				Node temp = new Node(data); // Make a temporary node with data
+				temp.next = current.next; // Make temp point to next node in list
+				current.next = temp; // Make the current node point to temp
+				return;
+			}
+		}		
+	}
+	
+	public void printoutlist()
+	{
+		// Do nothing if the head is null
+		if (head == null)
+		{
+			return;
+		}
+		
+		else
+		{
+			Node current = head; // Start at the head
+			int position = 0;
+			
+			//Loop to print out the entire list
+			while (current != null)
+			{
+				System.out.println ("The data in position " +  position +  " is " + current.data);  // Print out elements in the list
+				position++;
+				current = current.next;
+			}
+		}
+	}
+	
+	// Test of Node and LinkedList classes
+		public static void main(String[] args) 
+		{
+			LinkedList List = new LinkedList(); // Create a new linked list
+			int x = 0; // Define a variable x to be used in the loop
+			int data = 0;  // Define a variable to be used for data 
+			
+			//While loop to add data into the linked list
+			while (x < 100)
+			{
+				List.append(data);  // Add data to the start of the list
+				x ++;  // Increase x
+				data++;  // Increase data
+			}
+			
+			List.printoutlist(); // Print out the entire list
+			
+			List.prepend(10); // Add a node with value 10 to the start of the list
+			
+			List.printoutlist();
+			
+			List.append(11); // Add a node with value 11 to the end of the list
+			
+			List.printoutlist();
+			
+			List.deletewithposition(10); // Delete the node in position 10
+			
+			List.printoutlist();
+			
+			List.deletewithvalue(44); // Delete the node containing the value 44
+			
+			List.printoutlist();
+			
+			List.insertintoposition(22,40); // Insert a node with data into a position
+			
+			List.printoutlist();
+		}
+}
